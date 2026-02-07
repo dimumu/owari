@@ -299,7 +299,7 @@
             return (
                 <div className="fixed inset-0 z-[60] flex items-center justify-center p-4">
                     <div className="absolute inset-0 bg-black/70 backdrop-blur-md" onClick={onClose}></div>
-                    <div className="relative w-full max-w-4xl max-h-[90vh] bg-white rounded-2xl shadow-2xl overflow-hidden flex flex-col md:flex-row animate-fade-in-up">
+                    <div className="relative w-full max-w-4xl max-h-[90vh] bg-white rounded-2xl shadow-2xl overflow-y-auto md:overflow-hidden flex flex-col md:flex-row animate-fade-in-up">
                         <button onClick={onClose} className="absolute top-4 right-4 z-20 text-black/50 hover:text-black bg-white/90 backdrop-blur rounded-full p-2 shadow-lg transition-colors border border-white/20">
                             <X size={20} />
                         </button>
@@ -310,7 +310,7 @@
                                 <p className="text-blue-300 font-medium tracking-wider text-sm mt-1 uppercase">Survivor Record</p>
                             </div>
                         </div>
-                        <div className="flex-1 bg-white overflow-y-auto custom-scrollbar">
+                        <div className="flex-1 bg-white overflow-visible md:overflow-y-auto custom-scrollbar">
                             <div className="p-8 pb-12">
                                 <div className="mb-8">
                                     <h3 className="flex items-center gap-2 text-sm font-bold text-blue-900 uppercase tracking-widest border-b-2 border-blue-900 pb-2 mb-4">
