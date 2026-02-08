@@ -1,32 +1,18 @@
 <!DOCTYPE html>
 <html lang="ko">
-<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
-
-<style>
-    body, html, div, p, span, h1, h2, h3, h4, h5, h6, button, input, textarea {
-        font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif !important;
-    }
-</style>
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>일양대학교 - ILYANG UNIVERSITY</title>
     
-    <!-- 1. Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
         theme: {
           extend: {
             keyframes: {
-              fadeIn: {
-                '0%': { opacity: '0' },
-                '100%': { opacity: '1' },
-              },
-              fadeInUp: {
-                '0%': { opacity: '0', transform: 'translateY(20px)' },
-                '100%': { opacity: '1', transform: 'translateY(0)' },
-              }
+              fadeIn: { '0%': { opacity: '0' }, '100%': { opacity: '1' } },
+              fadeInUp: { '0%': { opacity: '0', transform: 'translateY(20px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } }
             },
             animation: {
               'fade-in': 'fadeIn 0.5s ease-out',
@@ -37,49 +23,34 @@
       }
     </script>
 
-    <!-- 2. Font (Pretendard) -->
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
     <style>
-      body {
-        font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
-        background-color: #f8fafc;
-      }
-      ::-webkit-scrollbar { width: 8px; }
-      ::-webkit-scrollbar-track { background: #f1f5f9; }
-      ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
-      ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
-      
-      /* Custom utility for hiding scrollbar but allowing scroll */
-      .custom-scrollbar::-webkit-scrollbar {
-        width: 6px;
-      }
-      .custom-scrollbar::-webkit-scrollbar-thumb {
-        background-color: rgba(0,0,0,0.2);
-        border-radius: 10px;
-      }
-      .writing-vertical-rl {
-        writing-mode: vertical-rl;
-      }
+        body, html, div, p, span, h1, h2, h3, h4, h5, h6, button, input, textarea {
+            font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif !important;
+        }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background-color: rgba(0,0,0,0.2); border-radius: 10px; }
+        .writing-vertical-rl { writing-mode: vertical-rl; }
     </style>
 
-    <!-- 3. React & Babel Setup (Import Map for Modules) -->
     <script type="importmap">
-{
-  "imports": {
-    "react": "https://esm.sh/react@18.2.0",
-    "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
-    "lucide-react": "https://esm.sh/lucide-react@0.294.0",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
-    "react/": "https://esm.sh/react@^19.2.4/"
-  }
-}
-</script>
+    {
+      "imports": {
+        "react": "https://esm.sh/react@18.2.0",
+        "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
+        "lucide-react": "https://esm.sh/lucide-react@0.294.0"
+      }
+    }
+    </script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 </head>
-<body class="text-gray-800 overflow-x-hidden">
+<body class="text-gray-800 overflow-x-hidden bg-white">
     <div id="root"></div>
 
-    <!-- 4. MAIN SCRIPT (Contains All Components) -->
     <script type="text/babel" data-type="module">
         import React, { useState } from 'react';
         import ReactDOM from 'react-dom/client';
@@ -90,27 +61,126 @@
         } from 'lucide-react';
 
         // ==========================================
-        // COMPONENT: Badge
+        // 0. DATA: 학생 정보
         // ==========================================
-        const Badge = ({ label, colorClass }) => {
-            return (
-                <span className={`px-3 py-1 rounded-full text-xs font-bold tracking-wide ${colorClass} border border-white/10`}>
-                    {label}
-                </span>
-            );
+        const STUDENT_DB = {
+            "20211234": {
+                name: "김일양",
+                id: "20211234",
+                dept: "뤼튼대학 캐챗학과",
+                grade: "3학년",
+                status: "휴학",
+                img: "https://api.dicebear.com/7.x/avataaars/svg?seed=Felix",
+                schedule: [
+                    { time: "1교시", mon: "", tue: "", wed: "", thu: "", fri: "" },
+                    { time: "2교시", mon: "", tue: "", wed: "", thu: "", fri: "" },
+                    { time: "3교시", mon: "", tue: "", wed: "", thu: "", fri: "" },
+                    { time: "4교시", mon: "", tue: "", wed: "", thu: "", fri: "" },
+                    { time: "5교시", mon: "", tue: "", wed: "", thu: "", fri: "" },
+                ],
+				totalGrades: [
+				{ no: 1, year: "2021", type: "1학기", grade: "1학년", avg: "4.2" }, 
+				{ no: 2, year: "2021", type: "2학기", grade: "1학년", avg: "4.0" },
+				{ no: 3, year: "2022", type: "1학기", grade: "2학년", avg: "4.5" },
+        ],
+            },
+            "2023110106": {
+                name: "염주호",
+                id: "202311106",
+                dept: "공과대학 고분자공학과",
+                grade: "1학년",
+                status: "재학",
+                img: "https://raw.githubusercontent.com/dimumu/owari/refs/heads/main/Photo(1).webp",
+                schedule: [
+                    { time: "1교시", mon: "공학수학 I", tue: "", wed: "일반화학", thu: "", fri: "대학글쓰기" },
+                    { time: "2교시", mon: "공학수학 I", tue: "컴퓨팅기초", wed: "일반화학", thu: "", fri: "대학글쓰기" },
+                    { time: "3교시", mon: "", tue: "컴퓨팅기초", wed: "", thu: "공학개론", fri: "" },
+                    { time: "4교시", mon: "고분자공학개론", tue: "", wed: "기초물리학", thu: "공학개론", fri: "" },
+                    { time: "5교시", mon: "고분자공학개론", tue: "", wed: "기초물리학", thu: "", fri: "" },
+                ],
+				totalGrades: [
+				{ no: 1, year: "2023", type: "1학기", grade: "1학년", avg: "2.3" }, 
+        ],
+            },
+            "2023110203": {
+                name: "김시형",
+                id: "2023110203",
+                dept: "공과대학 사회기술융합공학과",
+                grade: "3학년",
+                status: "재학",
+                img: "https://raw.githubusercontent.com/dimumu/owari/refs/heads/main/Photo(2).webp",
+                schedule: [
+                    { time: "1교시", mon: "", tue: "", wed: "데이터기반정책분석", thu: "", fri: "" },
+                    { time: "2교시", mon: "", tue: "기술윤리와법", wed: "데이터기반정책분석", thu: "", fri: "" },
+                    { time: "3교시", mon: "", tue: "기술윤리와법", wed: "", thu: "", fri: "" },
+                    { time: "4교시", mon: "사회조사방법론", tue: "사회시스템모델링", wed: "AI와사회구조", thu: "융합프로젝트 I", fri: "" },
+                    { time: "5교시", mon: "사회조사방법론", tue: "사회시스템모델링", wed: "AI와사회구조", thu: "융합프로젝트 I", fri: "" },
+                ],
+				totalGrades: [
+				{ no: 1, year: "2023", type: "1학기", grade: "1학년", avg: "1.9" }, 
+				{ no: 2, year: "2023", type: "2학기", grade: "1학년", avg: "2.1" }, 
+				{ no: 3, year: "2024", type: "1학기", grade: "2학년", avg: "3.0" }, 
+        ],
+            },
+            "2019120318": {
+                name: "문선주",
+                id: "2019120318",
+                dept: "예술대학 조소과",
+                grade: "4학년",
+                status: "재학",
+                img: "https://raw.githubusercontent.com/dimumu/owari/refs/heads/main/Photo(3).webp",
+                schedule: [
+                    { time: "1교시",  mon: "", tue: "캡스톤 디자인", wed: "", thu: "현대조형이론", fri: "" },
+                    { time: "2교시", mon: "조소워크숍 IV", tue: "캡스톤 디자인", wed: "", thu: "현대조형이론", fri: "" },
+                    { time: "3교시", mon: "조소워크숍 IV", tue: "", wed: "공공미술세미나", thu: "", fri: "" },
+                    { time: "4교시", mon: "", tue: "", wed: "공공미술세미나", thu: "", fri: "작가와비평" },
+                    { time: "5교시", mon: "", tue: "", wed: "", thu: "", fri: "작가와비평" },
+                ],
+				totalGrades: [
+				{ no: 1, year: "2019", type: "1학기", grade: "1학년", avg: "4.3" }, 
+				{ no: 2, year: "2019", type: "2학기", grade: "1학년", avg: "4.4" },
+				{ no: 3, year: "2020", type: "1학기", grade: "2학년", avg: "4.3" },
+        ],
+            },
         };
 
         // ==========================================
-        // COMPONENT: ContentOverlays
+        // 1. COMPONENT: 종합정보시스템 (통합 완료!)
         // ==========================================
-        
-        // 1. LOGIN SCREEN
-        const LoginOverlay = ({ onClose }) => {
+        const InfoSystem = ({ isOpen, onClose }) => {
+            const [userId, setUserId] = useState("");
+            const [userName, setUserName] = useState("");
+            const [isLoggedIn, setIsLoggedIn] = useState(false);
+            const [userInfo, setUserInfo] = useState(null);
+            const [error, setError] = useState("");
+
+            if (!isOpen) return null;
+
+            const handleLogin = () => {
+                const student = STUDENT_DB[userId];
+                if (student && student.name === userName) {
+                    setUserInfo(student);
+                    setIsLoggedIn(true);
+                    setError("");
+                } else {
+                    setError("학번 또는 이름이 일치하지 않습니다.");
+                }
+            };
+
+            const handleLogout = () => {
+                setIsLoggedIn(false);
+                setUserId("");
+                setUserName("");
+                setUserInfo(null);
+            };
+
             return (
                 <div className="fixed inset-0 z-[60] flex items-center justify-center p-4">
                     <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose}></div>
-                    <div className="relative w-full max-w-md bg-white rounded-lg shadow-2xl overflow-hidden animate-fade-in-up">
-                        <div className="bg-blue-900 p-6 text-center relative">
+                    
+                    <div className={`relative w-full ${isLoggedIn ? 'max-w-5xl' : 'max-w-md'} bg-white rounded-lg shadow-2xl overflow-hidden animate-fade-in-up transition-all duration-300`}>
+                        {/* 헤더 */}
+                        <div className="bg-blue-900 p-6 text-center relative shrink-0">
                             <button onClick={onClose} className="absolute top-4 right-4 text-white/50 hover:text-white transition-colors">
                                 <X size={24} />
                             </button>
@@ -118,41 +188,146 @@
                             <h2 className="text-white text-lg md:text-xl font-bold tracking-tight">일양대학교 종합정보시스템</h2>
                             <p className="text-blue-200 text-sm mt-1">Ilyang University Portal System</p>
                         </div>
-                        <div className="p-8 space-y-6">
-                            <div className="space-y-4">
-                                <div>
-                                    <label className="block text-sm font-bold text-gray-700 mb-1">아이디 (학번/교번)</label>
-                                    <div className="relative">
-                                        <User className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
-                                        <input type="text" placeholder="20251234" className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"/>
+
+                        <div className="bg-white">
+                            {!isLoggedIn ? (
+                                /* 로그인 화면 */
+                                <>
+                                    <div className="p-8 space-y-6">
+                                        <div className="space-y-4">
+                                            <div>
+                                                <label className="block text-sm font-bold text-gray-700 mb-1">아이디 (학번)</label>
+                                                <div className="relative">
+                                                    <User className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+                                                    <input 
+                                                        type="text" 
+                                                        value={userId}
+                                                        onChange={(e) => setUserId(e.target.value)}
+                                                        placeholder="20211234" 
+                                                        className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 outline-none"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <label className="block text-sm font-bold text-gray-700 mb-1">이름</label>
+                                                <div className="relative">
+                                                    <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+                                                    <input 
+                                                        type="text" 
+                                                        value={userName}
+                                                        onChange={(e) => setUserName(e.target.value)}
+                                                        placeholder="김일양" 
+                                                        className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 outline-none"
+                                                        onKeyPress={(e) => e.key === 'Enter' && handleLogin()}
+                                                    />
+                                                </div>
+                                            </div>
+                                            {error && <p className="text-red-500 text-sm font-bold text-center">{error}</p>}
+                                        </div>
+                                        <button onClick={handleLogin} className="w-full bg-blue-800 hover:bg-blue-700 text-white font-bold py-4 rounded transition-colors shadow-lg">
+                                            로그인
+                                        </button>
+                                        <div className="flex justify-between text-xs text-gray-500 pt-2">
+                                            <a href="#" className="hover:text-blue-600">아이디/비밀번호 찾기</a>
+                                            <a href="#" className="hover:text-blue-600">신입생 학번 조회</a>
+                                        </div>
                                     </div>
-                                </div>
-                                <div>
-                                    <label className="block text-sm font-bold text-gray-700 mb-1">비밀번호</label>
-                                    <div className="relative">
-                                        <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
-                                        <input type="password" placeholder="••••••••" className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"/>
+                                    <div className="bg-red-50 p-4 border-t border-red-100 flex items-start gap-3">
+                                        <AlertTriangle className="text-red-500 flex-shrink-0" size={20} />
+                                        <p className="text-xs text-red-700 font-medium leading-relaxed">
+                                            [긴급] 현재 외부 접속이 불안정합니다. 캠퍼스 내부망을 이용 중인 재학생 및 교직원은 즉시 보안 지침을 확인하십시오.
+                                        </p>
                                     </div>
+                                </>
+                            ) : (
+                                /* 로그인 성공 화면 */
+                                <div className="p-6 md:p-8 animate-fade-in space-y-6 max-h-[70vh] overflow-y-auto">
+                                    <div className="flex flex-col md:flex-row gap-6 items-center md:items-start bg-slate-50 p-6 rounded-xl border border-slate-200">
+                                        <img src={userInfo.img} alt="증명사진" className="w-32 h-40 object-cover rounded-lg shadow-md border border-slate-300" />
+                                        <div className="flex-1 w-full text-center md:text-left">
+                                            <div className="flex flex-col md:flex-row justify-between items-center mb-4">
+                                                <div>
+                                                    <h3 className="text-2xl font-bold text-slate-800">{userInfo.name} <span className="text-base font-normal text-slate-500">({userInfo.id})</span></h3>
+                                                    <p className="text-blue-600 font-bold">{userInfo.dept}</p>
+                                                </div>
+                                                <button onClick={handleLogout} className="mt-2 md:mt-0 text-xs bg-white border border-slate-300 px-3 py-1.5 rounded hover:bg-slate-50 transition shadow-sm">로그아웃</button>
+                                            </div>
+                                            <div className="grid grid-cols-2 gap-x-8 gap-y-2 text-sm text-slate-600">
+                                                <p>학년: {userInfo.grade}</p>
+                                                <p>상태: <span className="text-green-600 font-bold">{userInfo.status}</span></p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+                                        <div className="bg-slate-100 p-3 font-bold text-slate-700 border-b border-slate-200">📅 2026학년도 1학기 수강 시간표</div>
+                                        <div className="overflow-x-auto">
+                                            <table className="w-full text-sm text-center">
+                                                <thead className="bg-slate-50 text-slate-600 border-b">
+                                                    <tr><th className="p-3">교시</th><th className="p-3">월</th><th className="p-3">화</th><th className="p-3">수</th><th className="p-3">목</th><th className="p-3">금</th></tr>
+                                                </thead>
+                                                <tbody className="divide-y divide-slate-100">
+                                                    {userInfo.schedule.map((row, i) => (
+                                                        <tr key={i} className="hover:bg-slate-50 transition-colors">
+                                                            <td className="p-3 bg-slate-50 font-mono text-slate-400 border-r">{row.time}</td>
+                                                            <td className="p-3 border-r bg-blue-50/30 text-blue-900">{row.mon}</td>
+                                                            <td className="p-3 border-r">{row.tue}</td>
+                                                            <td className="p-3 border-r bg-blue-50/30 text-blue-900">{row.wed}</td>
+                                                            <td className="p-3 border-r">{row.thu}</td>
+                                                            <td className="p-3 bg-blue-50/30 text-blue-900">{row.fri}</td>
+                                                        </tr>
+                                                    ))}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+									<div className="mt-8 border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+									<div className="bg-slate-100 p-3 font-bold text-slate-700 border-b border-slate-200 flex items-center justify-between">
+									<span>📊 전체성적 조회</span>
+									<span className="text-xs font-normal text-slate-500">누계 평점: - / 4.5</span>
+									</div>
+									<div className="overflow-x-auto">
+        <table className="w-full text-sm text-center">
+            <thead className="bg-slate-50 text-slate-600 border-b font-semibold">
+                <tr>
+                    <th className="p-3 border-r">No</th>
+                    <th className="p-3 border-r">학기</th>
+                    <th className="p-3 border-r">학기종류</th>
+                    <th className="p-3 border-r">학년</th>
+                    <th className="p-3">평점</th>
+                </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-100">
+                {userInfo.totalGrades ? (
+                    userInfo.totalGrades.map((grade, idx) => (
+                        <tr key={idx} className="hover:bg-slate-50 transition-colors">
+                            <td className="p-3 bg-slate-50 font-mono text-slate-400 border-r">{grade.no}</td>
+                            <td className="p-3 border-r font-medium text-slate-700">{grade.year}년도</td>
+                            <td className="p-3 border-r text-slate-600">{grade.type}</td>
+                            <td className="p-3 border-r text-slate-600">{grade.grade}</td>
+                            <td className="p-3 font-bold text-blue-600 bg-blue-50/10">{grade.avg}</td>
+                        </tr>
+                    ))
+                ) : (
+                    <tr>
+                        <td colSpan="5" className="p-8 text-slate-400 italic">등록된 성적 정보가 없습니다.</td>
+                    </tr>
+                )}
+            </tbody>
+        </table>
+    </div>
+</div>
                                 </div>
-                            </div>
-                            <button className="w-full bg-blue-800 hover:bg-blue-700 text-white font-bold py-4 rounded transition-colors shadow-lg">로그인</button>
-                            <div className="flex justify-between text-xs text-gray-500 pt-2">
-                                <a href="#" className="hover:text-blue-600">아이디/비밀번호 찾기</a>
-                                <a href="#" className="hover:text-blue-600">신입생 학번 조회</a>
-                            </div>
-                        </div>
-                        <div className="bg-red-50 p-4 border-t border-red-100 flex items-start gap-3">
-                            <AlertTriangle className="text-red-500 flex-shrink-0" size={20} />
-                            <p className="text-xs text-red-700 font-medium leading-relaxed">
-                                [긴급] 현재 외부 접속이 불안정합니다. 캠퍼스 내부망을 이용 중인 재학생 및 교직원은 즉시 보안 지침을 확인하십시오.
-                            </p>
+                            )}
                         </div>
                     </div>
                 </div>
             );
         };
 
-        // 2. WORLDVIEW SCREEN
+        // ==========================================
+        // 2. COMPONENT: 세계관 (Worldview)
+        // ==========================================
         const WorldviewOverlay = ({ onClose }) => {
             return (
                 <div className="fixed inset-0 z-[60] flex items-center justify-center p-4">
@@ -215,7 +390,7 @@
                                     <li className="bg-slate-700/50 p-3 rounded border-l-4 border-red-900">
                                         <strong className="text-white block text-base mb-1">기숙사 (1생활관)</strong>
                                         최초 감염 확산지. 좁은 복도 구조 특성상 대피가 불가능했던 것으로 추정. 내부 진입 시도 자체가 자살 행위로 간주됨.
-									</li>
+                                    </li>
                                 </ul>
                             </section>
                         </div>
@@ -227,82 +402,24 @@
             );
         };
 
-        // 3. PROFILE SCREEN
+        // ==========================================
+        // 3. COMPONENT: 프로필 (Profile)
+        // ==========================================
         const ProfileOverlay = ({ onClose, profileId }) => {
             const getProfileData = (id) => {
                 switch (id) {
-                    case 'profile_1':
-                        return {
-                            name: "염주호",
-                            img: "https://raw.githubusercontent.com/dimumu/owari/refs/heads/main/portrait(1).webp",
-                            dept: "고분자공학과",
-                            id: "2023110106",
-                            dob: "11.24",
-                            age: "23세",
-                            status: "1학년 (복학/군필)",
-                            appearance: ["수더분하게 기른 검은 머리카락", "화려한 이목구비", "주홍색 눈동자", "키 182cm, 마른 체형, 넓은 어깨"],
-                            personality: ["즉흥적이고 도발적인 사고방식", "위험을 '별일 아닌 일'로 인식", "도덕적 유연성", "감정적 합의 중시"],
-                            noteTitle: "Behavior Patterns",
-                            noteContent: ["손톱 물어뜯기", "생각하는 동안 제자리를 빙글빙글 돌음", "모든 행동 템포가 느리고 여유로움", "지루함이 임계에 달하면 돌발 행동", "타인의 개인 공간 침범에 거리낌 없음"],
-                            warning: "Warning: Risk-Seeking Trait Detected"
-                        };
-                    case 'profile_2':
-                        return {
-                            name: "김시형",
-                            img: "https://raw.githubusercontent.com/dimumu/owari/refs/heads/main/portrait(2).webp",
-                            dept: "사회기술융합공학과",
-                            id: "2023110203",
-                            dob: "--.--",
-                            age: "23세",
-                            status: "3학년 (미필)",
-                            appearance: ["흑발", "파란 눈 (삼백안)", "귀여운 얼굴", "오른쪽 뺨 점 2개", "키 173cm"],
-                            personality: ["약삭빠른 기회주의자", "가벼운 성격, 사람을 좋아함", "호감 대상 앞에서 수줍음", "도벽 성향 있음", "연민과 동정을 적극 수용"],
-                            noteTitle: "Additional Notes",
-                            noteContent: ["압도적인 행운", "경쟁 게임 챌린저"],
-                            warning: null
-                        };
-                    case 'profile_3':
-                        return {
-                            name: "문선주",
-                            img: "https://raw.githubusercontent.com/dimumu/owari/refs/heads/main/portrait(3).webp",
-                            dept: "조소과",
-                            id: "2019120318",
-                            dob: "--.--",
-                            age: "26세",
-                            status: "4학년",
-                            appearance: ["흑발", "흑안", "깔끔한 인상", "키 186cm"],
-                            personality: ["현실주의적이며 냉소적", "은근한 장난끼", "마지못해 나서는 중재자", "갈등 상황에 민감함"],
-                            noteTitle: "Additional Notes",
-                            noteContent: ["타 집단과의 긴장을 경계함"],
-                            warning: null
-                        };
-                    default:
-                        return {
-                            name: "신원 미상",
-                            img: "https://placehold.co/600x800/gray/white?text=No+Data",
-                            dept: "정보 없음",
-                            id: "--------",
-                            dob: "--. --.",
-                            age: "미상",
-                            status: "생사 불명",
-                            appearance: ["데이터 없음"],
-                            personality: ["데이터 없음"],
-                            noteTitle: "Additional Notes",
-                            noteContent: ["데이터 없음"],
-                            warning: null
-                        };
+                    case 'profile_1': return { name: "염주호", img: "https://raw.githubusercontent.com/dimumu/owari/refs/heads/main/portrait(1).webp", dept: "고분자공학과", id: "2023110106", dob: "11.24", age: "23세", status: "1학년 (복학/군필)", appearance: ["수더분하게 기른 검은 머리카락", "화려한 이목구비와 진한 눈매", "주홍색 눈동자", "키 182cm, 마른 체형, 넓은 어깨"], personality: ["즉흥적이고 도발적인 사고방식", "위험을 '별일 아닌 일'로 인식", "도덕적 유연성 (Moral Flexibility)", "육체적 친밀감보다 감정적 합의 중시"], noteTitle: "Behavior Patterns", noteContent: ["손톱 물어뜯기, 생각하는 동안 제자리를 빙글빙글 돌음", "모든 행동 템포가 느리고 여유로움", "지루함이 임계에 달하면 돌발 행동", "타인의 개인 공간 침범에 거리낌 없음"], warning: "Warning: Risk-Seeking Trait Detected" };
+                    case 'profile_2': return { name: "김시형", img: "https://raw.githubusercontent.com/dimumu/owari/refs/heads/main/portrait(2).webp", dept: "사회기술융합공학과", id: "2023110203", dob: "--.--", age: "23세", status: "3학년 (미필)", appearance: ["흑발", "벽안 (삼백안)", "귀여운 얼굴", "오른쪽 뺨 점 2개", "키 173cm"], personality: ["약삭빠른 기회주의자", "가벼운 성격, 사람을 좋아함", "호감 대상 앞에서 수줍음", "도벽 성향 있음", "연민과 동정을 적극 수용"], noteTitle: "Additional Notes", noteContent: ["압도적인 행운", "경쟁 게임 챌린저"], warning: null };
+                    case 'profile_3': return { name: "문선주", img: "https://raw.githubusercontent.com/dimumu/owari/refs/heads/main/portrait(3).webp", dept: "조소과", id: "2019120318", dob: "--.--", age: "26세", status: "4학년", appearance: ["흑발", "흑안", "깔끔한 인상", "키 186cm"], personality: ["현실주의적이며 냉소적", "은근한 장난끼", "마지못해 나서는 중재자", "갈등 상황에 민감함"], noteTitle: "Additional Notes", noteContent: ["타 집단과의 긴장을 경계함"], warning: null };
+                    default: return { name: "신원 미상", img: "https://placehold.co/600x800/gray/white?text=No+Data", dept: "정보 없음", id: "--------", dob: "--. --.", age: "미상", status: "생사 불명", appearance: ["데이터 없음"], personality: ["데이터 없음"], noteTitle: "Additional Notes", noteContent: ["데이터 없음"], warning: null };
                 }
             };
-
             const profileData = getProfileData(profileId);
-
             return (
                 <div className="fixed inset-0 z-[60] flex items-center justify-center p-4">
                     <div className="absolute inset-0 bg-black/70 backdrop-blur-md" onClick={onClose}></div>
                     <div className="relative w-full max-w-4xl max-h-[90vh] bg-white rounded-2xl shadow-2xl overflow-y-auto md:overflow-hidden flex flex-col md:flex-row animate-fade-in-up">
-                        <button onClick={onClose} className="absolute top-4 right-4 z-20 text-black/50 hover:text-black bg-white/90 backdrop-blur rounded-full p-2 shadow-lg transition-colors border border-white/20">
-                            <X size={20} />
-                        </button>
+                        <button onClick={onClose} className="absolute top-4 right-4 z-20 text-black/50 hover:text-black bg-white/90 backdrop-blur rounded-full p-2 shadow-lg transition-colors border border-white/20"><X size={20} /></button>
                         <div className="w-full md:w-[45%] h-96 md:h-auto bg-gray-200 relative flex-shrink-0">
                             <img src={profileData.img} alt={profileData.name} className="w-full h-full object-cover object-top" />
                             <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/90 via-black/50 to-transparent p-6 pt-20">
@@ -313,9 +430,7 @@
                         <div className="flex-1 bg-white overflow-visible md:overflow-y-auto custom-scrollbar">
                             <div className="p-8 pb-12">
                                 <div className="mb-8">
-                                    <h3 className="flex items-center gap-2 text-sm font-bold text-blue-900 uppercase tracking-widest border-b-2 border-blue-900 pb-2 mb-4">
-                                        <Fingerprint size={16} /> Student Information
-                                    </h3>
+                                    <h3 className="flex items-center gap-2 text-sm font-bold text-blue-900 uppercase tracking-widest border-b-2 border-blue-900 pb-2 mb-4"><Fingerprint size={16} /> Student Information</h3>
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-y-4 gap-x-6 text-sm">
                                         <div className="flex flex-col border-b border-gray-100 pb-2"><span className="text-gray-400 font-bold text-xs mb-1">이름</span><span className="text-gray-900 font-bold text-lg">{profileData.name}</span></div>
                                         <div className="flex flex-col border-b border-gray-100 pb-2"><span className="text-gray-400 font-bold text-xs mb-1">생년월일</span><span className="text-gray-900 font-medium">{profileData.dob} <span className="text-gray-400 text-xs ml-1">({profileData.age})</span></span></div>
@@ -323,47 +438,9 @@
                                         <div className="flex flex-col border-b border-gray-100 pb-2"><span className="text-gray-400 font-bold text-xs mb-1">학번</span><span className="text-blue-700 font-mono font-bold text-lg tracking-wider">{profileData.id}</span></div>
                                     </div>
                                 </div>
-                                <div className="mb-8">
-                                    <h3 className="flex items-center gap-2 text-sm font-bold text-gray-900 uppercase tracking-widest bg-gray-100 p-2 rounded mb-4">
-                                        <User size={16} /> Visual Profile
-                                    </h3>
-                                    <div>
-                                        <span className="block text-xs font-bold text-gray-500 mb-2">핵심 인상</span>
-                                        <div className="flex flex-wrap gap-2">
-                                            {profileData.appearance.map((item, idx) => (
-                                                <span key={idx} className="bg-gray-50 text-gray-700 border border-gray-200 px-3 py-1.5 rounded text-xs font-medium">{item}</span>
-                                            ))}
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="mb-8">
-                                    <h3 className="flex items-center gap-2 text-sm font-bold text-gray-900 uppercase tracking-widest bg-gray-100 p-2 rounded mb-4">
-                                        <Activity size={16} /> Psycho-Analysis
-                                    </h3>
-                                    <ul className="space-y-2">
-                                        {profileData.personality.map((item, idx) => (
-                                            <li key={idx} className="flex items-start gap-2 text-sm text-gray-700">
-                                                <span className="w-1.5 h-1.5 bg-blue-500 rounded-full mt-1.5 flex-shrink-0"></span>
-                                                <span className={idx === 0 ? "font-bold text-blue-800" : ""}>{item}</span>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </div>
-                                <div>
-                                    <h3 className="flex items-center gap-2 text-sm font-bold text-gray-900 uppercase tracking-widest bg-gray-100 p-2 rounded mb-4">
-                                        <Book size={16} /> {profileData.noteTitle}
-                                    </h3>
-                                    <div className="bg-red-50 border-l-4 border-red-400 p-4 rounded-r">
-                                        <ul className="space-y-2">
-                                            {profileData.noteContent.map((item, idx) => (
-                                                <li key={idx} className="text-xs md:text-sm text-gray-800 leading-relaxed">- {item}</li>
-                                            ))}
-                                        </ul>
-                                        {profileData.warning && (
-                                            <div className="mt-3 pt-3 border-t border-red-100 text-[10px] text-red-600 font-bold uppercase tracking-widest">{profileData.warning}</div>
-                                        )}
-                                    </div>
-                                </div>
+                                <div className="mb-8"><h3 className="flex items-center gap-2 text-sm font-bold text-gray-900 uppercase tracking-widest bg-gray-100 p-2 rounded mb-4"><User size={16} /> Visual Profile</h3><div><span className="block text-xs font-bold text-gray-500 mb-2">핵심 인상</span><div className="flex flex-wrap gap-2">{profileData.appearance.map((item, idx) => (<span key={idx} className="bg-gray-50 text-gray-700 border border-gray-200 px-3 py-1.5 rounded text-xs font-medium">{item}</span>))}</div></div></div>
+                                <div className="mb-8"><h3 className="flex items-center gap-2 text-sm font-bold text-gray-900 uppercase tracking-widest bg-gray-100 p-2 rounded mb-4"><Activity size={16} /> Psycho-Analysis</h3><ul className="space-y-2">{profileData.personality.map((item, idx) => (<li key={idx} className="flex items-start gap-2 text-sm text-gray-700"><span className="w-1.5 h-1.5 bg-blue-500 rounded-full mt-1.5 flex-shrink-0"></span><span className={idx === 0 ? "font-bold text-blue-800" : ""}>{item}</span></li>))}</ul></div>
+                                <div><h3 className="flex items-center gap-2 text-sm font-bold text-gray-900 uppercase tracking-widest bg-gray-100 p-2 rounded mb-4"><Book size={16} /> {profileData.noteTitle}</h3><div className="bg-red-50 border-l-4 border-red-400 p-4 rounded-r"><ul className="space-y-2">{profileData.noteContent.map((item, idx) => (<li key={idx} className="text-xs md:text-sm text-gray-800 leading-relaxed">- {item}</li>))}</ul>{profileData.warning && (<div className="mt-3 pt-3 border-t border-red-100 text-[10px] text-red-600 font-bold uppercase tracking-widest">{profileData.warning}</div>)}</div></div>
                             </div>
                         </div>
                     </div>
@@ -372,13 +449,12 @@
         };
 
         // ==========================================
-        // COMPONENT: QuickMenu
+        // 4. COMPONENT: 퀵 메뉴 (QuickMenu)
         // ==========================================
         const QuickMenu = ({ onNavigate }) => {
             const [isOpen, setIsOpen] = useState(false);
             const [activeTab, setActiveTab] = useState('학부생');
             const tabs = ['예비대학생', '학부생', '교직원'];
-
             const profiles = [
                 { id: 'profile_1', dept: '고분자공학과', name: '염주호', thumb: 'https://raw.githubusercontent.com/dimumu/owari/refs/heads/main/%EC%97%BC%EC%A3%BC%ED%98%B8%20%EC%B9%98%EB%B9%84.webp' },
                 { id: 'profile_2', dept: '사회기술융합공학과', name: '김시형', thumb: 'https://raw.githubusercontent.com/dimumu/owari/refs/heads/main/%EA%B9%80%EC%8B%9C%ED%98%95%20%EC%B9%98%EB%B9%84.webp' },
@@ -490,13 +566,18 @@
         };
 
         // ==========================================
-        // COMPONENT: App (Main)
+        // 5. COMPONENT: 앱 (App)
         // ==========================================
         const App = () => {
             const [currentView, setCurrentView] = useState('home');
+            const [showSystem, setShowSystem] = useState(false);
 
             const handleNavigate = (page) => {
-                setCurrentView(page);
+                if (page === 'login') {
+                    setShowSystem(true); // '종합정보시스템' 버튼 누르면 여기로 옴!
+                } else {
+                    setCurrentView(page);
+                }
             };
 
             const handleCloseOverlay = () => {
@@ -505,10 +586,14 @@
 
             return (
                 <div className="relative min-h-screen bg-white">
-                    {currentView === 'login' && <LoginOverlay onClose={handleCloseOverlay} />}
+                    {/* 종합정보시스템 모달창 (네가 원하던 그 디자인!) */}
+                    <InfoSystem isOpen={showSystem} onClose={() => setShowSystem(false)} />
+
+                    {/* 기존 오버레이들 */}
                     {currentView === 'worldview' && <WorldviewOverlay onClose={handleCloseOverlay} />}
                     {currentView.startsWith('profile_') && <ProfileOverlay onClose={handleCloseOverlay} profileId={currentView} />}
 
+                    {/* 헤더 */}
                     <header className="fixed top-0 left-0 w-full z-40 bg-white/95 backdrop-blur-md border-b border-gray-100 transition-all">
                         <div className="max-w-7xl mx-auto px-4 md:px-8 h-20 flex items-center justify-between">
                             <div className="flex items-center gap-2 cursor-pointer" onClick={() => setCurrentView('home')}>
@@ -538,6 +623,7 @@
                         </div>
                     </header>
 
+                    {/* 메인 비주얼 */}
                     <main className="relative w-full h-screen overflow-hidden pt-20">
                         <div className="absolute inset-0 z-0">
                             <img src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=2070&auto=format&fit=crop" alt="Ilyang Campus Winter" className="w-full h-full object-cover" />
@@ -557,6 +643,7 @@
                         </div>
                     </main>
 
+                    {/* 퀵 메뉴 */}
                     <QuickMenu onNavigate={handleNavigate} />
                 </div>
             );
